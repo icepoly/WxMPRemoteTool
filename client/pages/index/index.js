@@ -56,17 +56,11 @@ Page({
     },
 
     doRequestWithSession: function () {
-        this.setData({
-            takeSession: true
-        })
-        this.doRequest()
-    },
-
-    doRequest: function () {
         util.showBusy('请求中...')
         var that = this
         var options = {
             url: config.service.requestUrl,
+            data:"test",
             login: true,
             success (result) {
                 util.showSuccess('请求成功完成')
@@ -80,10 +74,6 @@ Page({
                 console.log('request fail', error);
             }
         }
-        if (this.data.takeSession) {  // 使用 qcloud.request 带登录态登录
-            qcloud.request(options)
-        } else {    // 使用 wx.request 则不带登录态
-            wx.request(options)
-        }
+        qcloud.request(options)
     }
 })

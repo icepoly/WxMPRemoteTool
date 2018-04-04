@@ -1,6 +1,6 @@
 async function get (ctx, next) {
     const { signature, timestamp, nonce, echostr } = ctx.query
-    console.log('task get: ',ctx.query)
+    console.log('job get: ',ctx.query)
 }
 
 async function post (ctx, next) {
@@ -9,7 +9,7 @@ async function post (ctx, next) {
 
     ctx.body = 'success'
 
-    console.log('task post: ',ctx.request.body)
+    console.log('job post: ',ctx.request.body)
 }
 
 module.exports = {
