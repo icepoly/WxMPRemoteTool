@@ -13,7 +13,7 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 // --- 登录与授权 Demo --- //
 // 登录接口 /weapp/login
 router.get('/login', authorizationMiddleware, controllers.login)
-router.get('/task', validationMiddleware, controllers.task)
+router.post('/task', validationMiddleware, controllers.task)
 
 router.get('/job', controllers.job.get)
 router.post('/job', controllers.job.post)
