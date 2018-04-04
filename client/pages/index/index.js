@@ -60,8 +60,15 @@ Page({
         var that = this
         var options = {
             url: config.service.requestUrl,
-            data:"test",
             login: true,
+            data: {
+              name: "bella",
+              age: 20
+            },
+            header: {
+              "Content-Type": "applciation/json"
+            },
+            method: "POST",
             success (result) {
                 util.showSuccess('请求成功完成')
                 console.log('request success', result)
