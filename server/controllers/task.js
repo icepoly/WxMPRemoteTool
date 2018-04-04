@@ -5,7 +5,7 @@ module.exports = async (ctx, next) => {
     if (ctx.state.$wxInfo.loginState === 1) {
         // loginState 为 1，登录态校验成功
         const { signature, timestamp, nonce, echostr } = ctx.query
-        console.log('job get: ',ctx.query)
+        console.log('task get: ',ctx.query)
         ctx.state.data = 'success'
     } else {
         ctx.state.code = -1

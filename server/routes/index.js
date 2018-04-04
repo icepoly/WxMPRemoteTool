@@ -16,6 +16,6 @@ router.get('/login', authorizationMiddleware, controllers.login)
 router.get('/task', validationMiddleware, controllers.task)
 
 router.get('/job', controllers.job.get)
-router.post('/job', controllers.task.post)
+router.post('/job', controllers.job.post)
 
 module.exports = router
