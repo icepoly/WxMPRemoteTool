@@ -13,16 +13,9 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 // --- 登录与授权 Demo --- //
 // 登录接口 /weapp/login
 router.get('/login', authorizationMiddleware, controllers.login)
-// 用户信息接口（可以用来验证登录态） /weapp/user
-router.get('/user', validationMiddleware, controllers.user)
+router.get('/task', validationMiddleware, controllers.task)
 
-// GET  用来响应小程序后台配置时发送的验证请求 /weapp/message
-router.get('/message', controllers.message.get)
-// POST 用来处理微信转发过来的客服消息
-router.post('/message', controllers.message.post)
-
-router.get('/task', controllers.task.get)
-// POST 用来处理微信转发过来的客服消息
-router.post('/task', controllers.task.post)
+router.get('/job', controllers.task.get)
+router.post('/job', controllers.task.post)
 
 module.exports = router

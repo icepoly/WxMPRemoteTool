@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-    <!-- 用户登录测试 -->
+    <!-- 用户登录 -->
     <view class="userinfo" bindtap="login">
         <image
             class="userinfo-avatar"
@@ -8,18 +8,16 @@
             background-size="cover"
         ></image>
         <view>
-            <text class="userinfo-nickname">{{logged ? userInfo.nickName : '点击登录'}}</text>
+            <text class="userinfo-nickname">{{logged ? userInfo.nickName : '登录'}}</text>
             <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
         </view>
     </view>
 
-    <!-- 信道连接测试 -->
-    <view class="tunnel">
-        <view class="tunnel-text uploader-text">
-            <text bindtap="doRequest">请求（是否带有登陆态）</text>
-            <switch class="tunnel-switch" bindchange="switchRequestMode" color="#007AFF"/>
+    <view class="message">
+        <view class="message-text">
+            <text bindtap="doRequestWithSession">请求</text>
         </view>
-        <view class="tunnel-text" wx:if="{{requestResult}}">
+        <view class="message-text" wx:if="{{requestResult}}">
             <text class="request-text">{{'请求结果：' + requestResult}}</text>
         </view>
     </view>
