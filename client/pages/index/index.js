@@ -58,15 +58,14 @@ Page({
     doRequestWithSession: function () {
         util.showBusy('请求中...')
         var that = this
+        var jsondata = {}
+        jsondata.type = 1
         var options = {
             url: config.service.requestUrl,
             login: true,
-            data: {
-              name: "bella",
-              age: 20
-            },
+            data: jsondata,
             header: {
-              "Content-Type": "applciation/json"
+              "Content-Type": "application/json"
             },
             method: "POST",
             success (result) {
