@@ -73,7 +73,6 @@ Page({
 
         var options = {
             url: config.service.requestUrl,
-            login: true,
             data: this.data.takedata,
             header: {
               "Content-Type": "application/json"
