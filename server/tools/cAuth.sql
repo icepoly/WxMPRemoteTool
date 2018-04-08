@@ -55,7 +55,7 @@ CREATE TABLE `cTaskInfo` (
   `optype` tinyint unsigned NOT NULL DEFAULT 0,
   `opdata` tinyint unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`uId`),
-  foreign key(uId) references cUserInfo(uId)
+  foreign key(uId) references cUserInfo(uId) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='任务信息';
 
 SET FOREIGN_KEY_CHECKS = 1;
