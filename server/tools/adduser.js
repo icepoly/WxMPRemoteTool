@@ -3,7 +3,7 @@ const path = require('path')
 
 const { mysql: config } = require('../config')
 
-const md5 = require('./middlewares/bodyparser')
+const md5 = require('../middlewares/md5')
 
 var arguments = process.argv.splice(2);
 
