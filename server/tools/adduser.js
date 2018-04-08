@@ -3,7 +3,7 @@ const path = require('path')
 
 const { mysql: config } = require('../config')
 
-const md5 = require('../middlewares/md5')
+const md5 = require('../middlewares/util')
 
 var arguments = process.argv.splice(2);
 
@@ -45,7 +45,7 @@ DB('cSessionInfo').whereRaw('open_id = ?',arguments[0]).then(res =>{
     }
     else {
         console.log('open_id校验成功！')
-        DB('cUserInfo').insert({open_id: arguments[0], skey: md5(arguments[1]), permission: arguments[2]}).then(res =>{
+        DB('cUserInfo').insert({open_id: arguments[0], skey: md5crypto(arguments[1]), permission: arguments[2]}).then(res =>{
         if(JSON.stringify(res) == "[]"){
                 console.log('adduser权限失败！')
                 process.exit(0)
