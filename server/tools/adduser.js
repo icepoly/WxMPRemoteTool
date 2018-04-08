@@ -23,7 +23,6 @@ const DB = require('knex')({
 })
 
 var content = "insert into cTaskInfo(uId) select uId from cUserInfo where open_id = \"" + arguments[0] +"\";"
-console.log(content)
 
 function processContent(sqlContent){
 DB.raw(content).then(res =>{
