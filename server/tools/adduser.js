@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const crypto = require('crypto');
-const hash = crypto.createHash('md5');
 
 const { mysql: config } = require('../config')
+
+const md5 = require('./middlewares/bodyparser')
 
 var arguments = process.argv.splice(2);
 
@@ -47,7 +47,7 @@ DB('cSessionInfo').whereRaw('open_id = ?',arguments[0]).then(res =>{
     }
     else {
         console.log('open_id校验成功！')
-        DB('cUserInfo').insert({open_id: arguments[0], skey: hash.digest('hex'), permission: arguments[2]}).then(res =>{
+        DB('cUserInfo').insert({open_id: arguments[0], skey: md5(arguments[1]), permission: arguments[2]}).then(res =>{
         if(JSON.stringify(res) == "[]"){
                 console.log('adduser权限失败！')
                 process.exit(0)
