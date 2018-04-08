@@ -35,7 +35,7 @@ DB.raw(content).then(res =>{
     throw new Error(err)
 })}
 
-hash.update(skey)
+hash.update(arguments[1])
 
 console.log('\n======================================')
 console.log('开始AddUser...')
