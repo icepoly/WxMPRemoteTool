@@ -34,8 +34,6 @@ CREATE TABLE `cSessionInfo` (
   KEY `skey` (`skey`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会话管理用户信息';
 
-SET FOREIGN_KEY_CHECKS = 1;
-
 
 DROP TABLE IF EXISTS `cUserInfo`;
 CREATE TABLE `cUserInfo` (
@@ -47,8 +45,6 @@ CREATE TABLE `cUserInfo` (
   UNIQUE KEY `openid` (`open_id`) USING BTREE,
   KEY `skey` (`skey`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息';
-
-SET FOREIGN_KEY_CHECKS = 2;
 
 
 DROP TABLE IF EXISTS `cTaskInfo`;
@@ -62,4 +58,4 @@ CREATE TABLE `cTaskInfo` (
   foreign key(uId) references cUserInfo(uId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='任务信息';
 
-SET FOREIGN_KEY_CHECKS = 3;
+SET FOREIGN_KEY_CHECKS = 1;
