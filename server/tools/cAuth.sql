@@ -35,3 +35,31 @@ CREATE TABLE `cSessionInfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会话管理用户信息';
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+DROP TABLE IF EXISTS `cUserInfo`;
+CREATE TABLE `cUserInfo` (
+  `uId` int unsigned NOT NULL AUTO_INCREMENT,
+  `open_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `skey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permission` tinyint unsigned NOT NULL DEFAULT 100,
+  PRIMARY KEY (`uId`),
+  UNIQUE KEY `openid` (`open_id`) USING BTREE,
+  KEY `skey` (`skey`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息';
+
+SET FOREIGN_KEY_CHECKS = 2;
+
+
+DROP TABLE IF EXISTS `cTaskInfo`;
+CREATE TABLE `cTaskInfo` (
+  `uId` int unsigned NOT NULL,
+  `state` tinyint unsigned NOT NULL DEFAULT 0,
+  `type` tinyint unsigned NOT NULL DEFAULT 0,
+  `optype` tinyint unsigned NOT NULL DEFAULT 0,
+  `opdata` tinyint unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`uId`),
+  foreign key(uId) references cUserInfo(uId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='任务信息';
+
+SET FOREIGN_KEY_CHECKS = 3;

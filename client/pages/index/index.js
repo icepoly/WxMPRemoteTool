@@ -55,15 +55,26 @@ Page({
         })
     },
 
+    doCheckIn: function()
+    {
+      var jsondata = {}
+      jsondata.type = 2
+      jsondata.optype = 1
+      jsondata.opdata = 1
+      this.setData({
+        takedata: jsondata
+      })
+      this.doRequestWithSession()
+    },
+
     doRequestWithSession: function () {
         util.showBusy('请求中...')
         var that = this
-        var jsondata = {}
-        jsondata.type = 1
+
         var options = {
             url: config.service.requestUrl,
             login: true,
-            data: jsondata,
+            data: this.data.takedata,
             header: {
               "Content-Type": "application/json"
             },
