@@ -17,13 +17,11 @@ Page({
 
         util.showBusy('正在登录')
         var that = this
-        console.log('登录begin')
         // 调用登录接口
         qcloud.login({
             success(result) {
                 if (result) {
-                  util.showSuccess('登录成功1', result)
-                  console.log('登录', result)
+                  util.showSuccess('登录成功', result)
                     that.setData({
                         userInfo: result,
                         logged: true
@@ -34,16 +32,16 @@ Page({
                         url: config.service.requestUrl,
                         login: true,
                         success(result) {
-                            console.log('登录', result.data.data)
-                            util.showSuccess('登录成功2')
+                            util.showSuccess('登录成功')
                             that.setData({
                                 userInfo: result.data.data,
+                                uId: result.data.data.uId,
                                 logged: true
                             })
                         },
 
                         fail(error) {
-                            util.showModel('请求失败2', error)
+                            util.showModel('请求失败', error)
                             console.log('request fail', error)
                         }
                     })
@@ -59,8 +57,9 @@ Page({
 
     doCheckIn: function()
     {
+      var that = this
       var jsondata = {}
-      jsondata.uId = this.data.useruId
+      jsondata.uId = that.data.uId
       jsondata.type = 2
       jsondata.optype = 1
       jsondata.opdata = 1
@@ -76,7 +75,7 @@ Page({
 
         var options = {
             url: config.service.taskUrl,
-            data: this.data.takedata,
+            data: that.data.takedata,
             header: {
               "Content-Type": "application/json"
             },

@@ -10,7 +10,7 @@ module.exports = async (ctx, next) => {
         await check.then(res =>{
             if(res != -1){
                 ctx.state.data = ctx.state.$wxInfo.userinfo
-                ctx.state.uId = res
+                ctx.state.data.uId = res
             }})
     }
 }
