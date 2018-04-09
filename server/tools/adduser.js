@@ -1,11 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-
 const { mysql: config } = require('../config')
 
 const util = require('../middlewares/util')
 
-var arguments = process.argv.splice(2);
+var arguments = process.argv.splice(2)
 
 if(arguments.length != 3) {
    console.log('参数错误！')
