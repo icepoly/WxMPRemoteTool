@@ -135,7 +135,7 @@ var login = function login(options) {
     if (session) {
         wx.checkSession({
             success: function () {
-                options.success(session.userinfo);
+                options.success(session.userInfo);
             },
 
             fail: function () {

@@ -31,7 +31,7 @@ Page({
                 } else {
                     // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
                     qcloud.request({
-                        url: config.service.loginUrl,
+                        url: config.service.requestUrl,
                         login: true,
                         success(result) {
                             console.log('登录', result.data.data)
@@ -75,7 +75,7 @@ Page({
         var that = this
 
         var options = {
-            url: config.service.requestUrl,
+            url: config.service.taskUrl,
             data: this.data.takedata,
             header: {
               "Content-Type": "application/json"

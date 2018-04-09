@@ -33,7 +33,6 @@ var RequestError = (function () {
 })();
 
 function request(options) {
-  console.log("request begin", options)
     if (typeof options !== 'object') {
         var message = '请求传参应为 object 类型，但实际传了 ' + (typeof options) + ' 类型';
         throw new RequestError(constants.ERR_INVALID_PARAMS, message);
@@ -60,7 +59,6 @@ function request(options) {
     // 是否已经进行过重试
     var hasRetried = false;
 
-    console.log("login request begin")
     if (requireLogin) {
         doRequestWithLogin();
     } else {
@@ -69,20 +67,19 @@ function request(options) {
 
     // 登录后再请求
     function doRequestWithLogin() {
-      console.log("doRequestWithLogin request begin")
         loginLib.login({ success: doRequest, fail: callFail });
     }
 
     // 实际进行请求的方法
     function doRequest() {
         var authHeader = buildAuthHeader(Session.get());
-        console.log("wx request begin")
+
         wx.request(utils.extend({}, options, {
             header: utils.extend({}, originHeader, authHeader),
 
             success: function (response) {
                 var data = response.data;
-                console.log("request error", response)
+
                 var error, message;
                 if (data && data.code === -1) {
                     Session.clear();
