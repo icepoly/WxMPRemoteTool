@@ -36,6 +36,7 @@ Page({
                             util.showSuccess('登录成功')
                             that.setData({
                                 userInfo: result.data.data,
+                                useruId: result.data.uId,
                                 logged: true
                             })
                         },
@@ -58,6 +59,7 @@ Page({
     doCheckIn: function()
     {
       var jsondata = {}
+      jsondata.uId = this.data.useruId
       jsondata.type = 2
       jsondata.optype = 1
       jsondata.opdata = 1
