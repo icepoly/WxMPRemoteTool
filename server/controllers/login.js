@@ -1,5 +1,5 @@
 // 登录授权接口
-const db = require('../middlewares/util')
+const db = require('../middlewares/db')
 
 module.exports = async (ctx, next) => {
     // 通过 Koa 中间件进行登录之后
