@@ -22,7 +22,8 @@ Page({
         qcloud.login({
             success(result) {
                 if (result) {
-                    util.showSuccess('登录成功')
+                  util.showSuccess('登录成功1', result)
+                  console.log('登录', result)
                     that.setData({
                         userInfo: result,
                         logged: true
@@ -33,16 +34,16 @@ Page({
                         url: config.service.loginUrl,
                         login: true,
                         success(result) {
-                            util.showSuccess('登录成功')
+                            console.log('登录', result.data.data)
+                            util.showSuccess('登录成功2')
                             that.setData({
                                 userInfo: result.data.data,
-                                useruId: result.data.uId,
                                 logged: true
                             })
                         },
 
                         fail(error) {
-                            util.showModel('请求失败', error)
+                            util.showModel('请求失败2', error)
                             console.log('request fail', error)
                         }
                     })
