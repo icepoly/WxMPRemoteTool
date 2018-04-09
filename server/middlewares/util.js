@@ -8,7 +8,7 @@ var md5crypto = (content) => {
 
 var logout = (content) => {
     var date = new Date()
-    console.log("logout: ", date, content)
+    console.log("logoutput: ", date, content)
 }
 
 module.exports = { md5crypto, logout }
