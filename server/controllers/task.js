@@ -19,9 +19,9 @@ var checkUserInfo = (open_id) => {
         }
         else {
             return true
-    }}, err => {
-        return false
-    })
+        }}, err => {
+            return false
+        })
 }
 
 module.exports = async (ctx, next) => {
@@ -30,9 +30,11 @@ module.exports = async (ctx, next) => {
     // 具体查看：
     if (ctx.state.$wxInfo.loginState === 1 && checkUserInfo(ctx.state.$wxInfo.open_id)) {
         // loginState 为 1，登录态校验成功
-        const body = ctx.request.body
-        ctx.state.code = 0
-        ctx.body = 'success'
+        checkUserInfo(ctx.state.$wxInfo.open_id).then(res =>{
+            const body = ctx.request.body
+            ctx.state.code = 0
+            ctx.body = 'success'
+        })
     } else {
         ctx.state.code = -1
     }
