@@ -9,9 +9,7 @@ module.exports = async (ctx, next) => {
         var check = db.checkUserInfo(ctx.state.$wxInfo.userinfo.openId)
         await check.then(res => {
             if (res > 0) {
-                const body = ctx.request.body
-                var jsondata = JSON.parse(body)
-                var update = db.updateTaskState(ctx.state.$wxInfo.userinfo.openId, jsondata, 1)
+                var update = db.updateTaskState(ctx.state.$wxInfo.userinfo.openId, ctx.request.body, 1)
                 await update.then(res => {
                     if (res > 0) {
                         ctx.body = 'success'
