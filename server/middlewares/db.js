@@ -12,7 +12,7 @@ const DB = require('knex')({
     }
 })
 
-var checkUserInfo = (open_id) => {
+async function checkUserInfo(open_id){
     return DB('cUserInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
             return 0
@@ -24,7 +24,7 @@ var checkUserInfo = (open_id) => {
         })
 }
 
-var updateTaskState = (open_id, data, state) => {
+async function updateTaskState(open_id, data, state){
     return DB('cTaskInfo')
     .where('open_id', '=', open_id)
     .where('state', '=', 0)
