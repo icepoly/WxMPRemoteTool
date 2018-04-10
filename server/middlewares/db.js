@@ -25,6 +25,11 @@ async function checkUserInfo(open_id){
 }
 
 async function updateTaskState(open_id, data, state){
+    var chek = checkUserInfo(open_id)
+    await check.then(res => {
+            if (res <= 0) {
+                return false
+            }})
     return DB('cTaskInfo')
     .where('open_id', '=', open_id)
     .where('state', '=', 0)
@@ -44,4 +49,4 @@ async function updateTaskState(open_id, data, state){
         })
 }
 
-module.exports = { checkUserInfo, updateTaskState }
+module.exports = { updateTaskState }
