@@ -26,7 +26,7 @@ async function checkUserInfo(open_id){
 
 async function updateTaskState(open_id, data, state){
     var check = checkUserInfo(open_id)
-    await check.then(res => {
+    return await check.then(res => {
             if (res <= 0) {
                 return 0x01
             }
