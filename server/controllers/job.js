@@ -1,5 +1,11 @@
+const db= require('../middlewares/db')
+
 async function get (ctx, next) {
-    const { signature, timestamp, nonce, echostr } = ctx.query
+    const { openid } = ctx.query
+    var get = db.updateTaskState(openid)
+    await get.then(res => {
+        ctx.state.data = res
+    })
 }
 
 module.exports = {

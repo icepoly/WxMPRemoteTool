@@ -24,7 +24,7 @@ async function checkUserInfo(open_id){
         })
 }
 
-async function updateTaskState(open_id, data, state){
+async function AddTask(open_id, data){
     var check = checkUserInfo(open_id)
     return await check.then(res => {
             if (res <= 0) {
@@ -32,11 +32,8 @@ async function updateTaskState(open_id, data, state){
             }
             else
             {
-                return DB('cTaskInfo')
-                .where('open_id', '=', open_id)
-                .where('state', '=', 0)
-                .update({
-                  state: state,
+                return DB('cTaskInfo').where('open_id', '=', open_id).where('state', '=', 0).update({
+                  state: 1,
                   type: data.type,
                   optype: data.optype,
                   opdata: data.opdata,
@@ -53,4 +50,31 @@ async function updateTaskState(open_id, data, state){
 
 }
 
-module.exports = { updateTaskState }
+async function AcceptJob(open_id){
+    var check = checkUserInfo(open_id)
+    var data = {}
+    return await check.then(res => {
+            if (res <= 0) {
+                return data
+            }
+            else
+            {
+                DB('cTaskInfo').where('state', '==', 1).whereRaw('open_id = ?',open_id).then(res =>{
+                    if(JSON.stringify(res) == "[]"){
+                        return data
+                    }
+                    else {
+                        await DB('cTaskInfo').where('open_id', '=', open_id).where('state', '==', 1).update({
+                          state: 0
+                        })
+                        data.type = res[0].type
+                        data.optype =res[0].optype
+                        data.opdata =res[0].opdata
+                        return data
+                    }}, err => {
+                        return data
+                    })
+            }})
+
+}
+module.exports = { AddTask, AcceptJob }
