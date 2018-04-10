@@ -42,7 +42,7 @@ async function updateTaskInfo(open_id){
 }
 
 async function addTask(open_id, data){
-    var checkret = checkUserInfo(open_id).then(res => {
+    var checkret = await checkUserInfo(open_id).then(res => {
         if (res <= 0) {
             return 0x01
         }
@@ -93,26 +93,32 @@ async function updateJobInfo(open_id){
 
 async function acceptJob(open_id){
     var data = {}
-    var check = checkUserInfo(open_id)
-    return await check.then(res => {
-            if (res <= 0) {
-                return data
-            }
-            else {
-                var query = queryJobInfo(open_id)
-                return await query.then(res => {
-                    var update = updateJobInfo(open_id)
-                    return await update.then(ret => {
-                        if(ret){
-                            return res
-                        }
-                        else {
-                            return data;
-                        }
-                    })
-                })
-            }
+    var checkret = await checkUserInfo(open_id).then(res => {
+        if (res <= 0) {
+            return true
+        }
+        else{
+            return false
+        }
+    })
+    if(checkret){
+        var data = await queryJobInfo(open_id).then(res => {
+            return res
         })
+        var ret = await updateJobInfo(open_id).then(ret => {
+            return ret
+        })
+        if(ret){
+            return data
+        }
+        else{
+            return data
+        }
+    }
+    else
+    {
+        return data
+    }
 }
 
 module.exports = { addTask, acceptJob }
