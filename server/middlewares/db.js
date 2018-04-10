@@ -102,7 +102,7 @@ async function acceptJob(open_id){
         }
     })
     if(checkret){
-        var data = await queryJobInfo(open_id).then(res => {
+        data = await queryJobInfo(open_id).then(res => {
             return res
         })
         var ret = await updateJobInfo(open_id).then(ret => {
