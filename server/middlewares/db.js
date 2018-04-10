@@ -28,7 +28,7 @@ async function updateTaskState(open_id, data, state){
     var chek = checkUserInfo(open_id)
     await check.then(res => {
             if (res <= 0) {
-                return false
+                return 0x01
             }})
     return DB('cTaskInfo')
     .where('open_id', '=', open_id)
@@ -40,12 +40,12 @@ async function updateTaskState(open_id, data, state){
       opdata: data.opdata,
     }).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return false
+            return 0x10
         }
         else {
-            return true
+            return 0
         }}, err => {
-            return false
+            return 0x11
         })
 }
 
