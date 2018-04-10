@@ -35,7 +35,6 @@ Page({
                             util.showSuccess('登录成功')
                             that.setData({
                                 userInfo: result.data.data,
-                                uId: result.data.data.uId,
                                 logged: true
                             })
                         },
@@ -59,7 +58,6 @@ Page({
     {
       var that = this
       var jsondata = {}
-      jsondata.uId = that.data.uId
       jsondata.type = 2
       jsondata.optype = 1
       jsondata.opdata = 1
