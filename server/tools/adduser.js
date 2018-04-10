@@ -26,11 +26,9 @@ console.log('开始AddUser...')
 DB('cUserInfo').where('open_id', '=', arguments[0]).update({permission: arguments[1]}).then(res =>{
     if(JSON.stringify(res) == "[]"){
             console.log('adduser失败！')
-            process.exit(0)
     }
     else {
             console.log('adduser成功！')
-            processContent(content)
     }}, err => {
         throw new Error(err)
     })
