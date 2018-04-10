@@ -15,7 +15,7 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 router.get('/login', authorizationMiddleware, controllers.login)
 // 用户信息接口（可以用来验证登录态） /weapp/user
 router.get('/user', validationMiddleware, controllers.user)
-router.post('/task', validationMiddleware, controllers.task.post)
+router.post('/task', validationMiddleware, controllers.task)
 router.get('/job', controllers.job.get)
 
 module.exports = router
