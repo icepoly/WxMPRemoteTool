@@ -95,10 +95,10 @@ async function acceptJob(open_id){
     var data = {}
     var checkret = await checkUserInfo(open_id).then(res => {
         if (res <= 0) {
-            return true
+            return false
         }
         else{
-            return false
+            return true
         }
     })
     if(checkret){
