@@ -32,7 +32,7 @@ async function updateTaskState(open_id, data, state){
       state: state,
       type: data.type,
       optype: data.opType,
-      opdata,data.opData,
+      opdata: data.opData,
     }).then(res =>{
         if(JSON.stringify(res) == "[]"){
             return false
