@@ -15,24 +15,24 @@ const DB = require('knex')({
 var checkUserInfo = (open_id) => {
     return DB('cUserInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return -1
+            return 0
         }
         else {
-            return res[0].uId
+            return res[0].permission
         }}, err => {
-            return -1
+            return 0
         })
 }
 
-var updateTaskState = (uId, type, opType, opData) => {
-    DB('cTaskInfo')
-    .where('uId', '==', uId)
-    .where('state', '==', 0)
+var updateTaskState = (open_id, data, state) => {
+    return DB('cTaskInfo')
+    .where('open_id', '=', open_id)
+    .where('state', '=', 0)
     .update({
-      state: 1,
-      type: type,
-      optype: opType,
-      opdata,opData,
+      state: state,
+      type: data.type,
+      optype: data.opType,
+      opdata,data.opData,
     }).then(res =>{
         if(JSON.stringify(res) == "[]"){
             return false
