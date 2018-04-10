@@ -50,21 +50,17 @@ CREATE TABLE `cTaskInfo` (
   `state` tinyint unsigned NOT NULL DEFAULT 0,
   `type` tinyint unsigned NOT NULL DEFAULT 0,
   `optype` tinyint unsigned NOT NULL DEFAULT 0,
-  `opdata` tinyint unsigned NOT NULL DEFAULT 0,
+  `opdata` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY (`open_id`),
   foreign key(open_id) references cSessionInfo(open_id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='任务信息';
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-delimiter //
-drop trigger if exists tri_userInsert//
+drop trigger if exists tri_userInsert;
 create trigger tri_userInsert after insert
 on cSessionInfo for each row
 begin
-
 insert into cUserInfo(open_id) values(new.open_id);
 insert into cTaskInfo(open_id) values(new.open_id);
-
-end;//
-delimiter ;
+end;
