@@ -32,3 +32,5 @@ DB('cUserInfo').where('open_id', '=', arguments[0]).update({permission: argument
     }}, err => {
         throw new Error(err)
     })
+
+process.exit();
