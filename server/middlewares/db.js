@@ -64,13 +64,20 @@ async function AcceptJob(open_id){
                         return data
                     }
                     else {
-                        await DB('cTaskInfo').where('open_id', '=', open_id).where('state', '==', 1).update({
+                        DB('cTaskInfo').where('open_id', '=', open_id).where('state', '==', 1).update({
                           state: 0
-                        })
-                        data.type = res[0].type
-                        data.optype =res[0].optype
-                        data.opdata =res[0].opdata
-                        return data
+                        }).then(res =>{
+                            if(res === 0){
+                                return data
+                            }
+                            else {
+                                data.type = res[0].type
+                                data.optype =res[0].optype
+                                data.opdata =res[0].opdata        
+                                return data
+                            }}, err => {
+                                return 0x11
+                            })
                     }}, err => {
                         return data
                     })
