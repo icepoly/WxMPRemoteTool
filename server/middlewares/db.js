@@ -35,31 +35,35 @@ async function updateTaskInfo(open_id){
               return 0x10
           }
           else {
-              return 0
+              return 0x00
           }}, err => {
               return 0x11
           })
 }
 
 async function addTask(open_id, data){
-    var check = checkUserInfo(open_id)
-    return await check.then(res => {
-            if (res <= 0) {
-                return 0x01
-            }
-            else
-            {
-                var update = updateTaskInfo(open_id)
-                return await update.then(res => {
-                    return res
-                })
-            }})
-
+    var checkret = checkUserInfo(open_id).then(res => {
+        if (res <= 0) {
+            return 0x01
+        }
+        else{
+            return 0x00
+        }})
+    
+    if(checkret === 0x00){
+        return await updateTaskInfo(open_id).then(res => {
+            return res
+        })
+    }
+    else
+    {
+        return checkret
+    }
 }
 
 async function queryJobInfo(open_id){
     var data = {}
-    DB('cTaskInfo').where('state', '=', 1).whereRaw('open_id = ?',open_id).then(res =>{
+    return DB('cTaskInfo').where('state', '=', 1).whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
             return data
         }
@@ -111,4 +115,4 @@ async function acceptJob(open_id){
         })
 }
 
-module.exports = { AddTask, AcceptJob }
+module.exports = { addTask, acceptJob }
