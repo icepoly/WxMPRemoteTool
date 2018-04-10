@@ -12,7 +12,7 @@ module.exports = async (ctx, next) => {
                 ctx.body = 'success'
             }
             else{
-                ctx.state.code = res
+                ctx.body = res
             }
         })
 
