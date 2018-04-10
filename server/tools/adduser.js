@@ -23,7 +23,7 @@ const DB = require('knex')({
 console.log('\n======================================')
 console.log('开始AddUser...')
 
-DB('cUserInfo').where('open_id', '==', arguments[0]).update({permission: arguments[1]}).then(res =>{
+DB('cUserInfo').where('open_id', '=', arguments[0]).update({permission: arguments[1]}).then(res =>{
     if(JSON.stringify(res) == "[]"){
             console.log('adduser失败！')
             process.exit(0)
