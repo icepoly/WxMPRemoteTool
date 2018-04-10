@@ -6,7 +6,7 @@ module.exports = async (ctx, next) => {
     // 具体查看：
     if (ctx.state.$wxInfo.loginState === 1) {
         // loginState 为 1，登录态校验成功
-        var update = db.AddTask(ctx.state.$wxInfo.userinfo.openId, ctx.request.body)
+        var update = db.addTask(ctx.state.$wxInfo.userinfo.openId, ctx.request.body)
         await update.then(res => {
             if (res === 0) {
                 ctx.body = 'success'
