@@ -48,7 +48,9 @@ async function addTask(open_id, data){
                               return 0x11
                           })
                 }
-                return await updateTaskInfo(open_id)
+                return await updateTaskInfo(open_id).then(res => {
+                    return res
+                })
             }})
 
 }
@@ -76,7 +78,7 @@ async function acceptJob(open_id){
                             return data
                         })
 
-                async function updateTaskInfo(open_id){
+                async function updateJobInfo(open_id){
                     return DB('cTaskInfo').where('open_id', '=', open_id).where('state', '=', 1).update({
                         state: 0
                       }).then(res =>{
@@ -92,7 +94,7 @@ async function acceptJob(open_id){
                   var query = queryJobInfo(open_id)
                   return await query.then(res => {
 
-                    var update = updateTaskInfo(open_id)
+                    var update = updateJobInfo(open_id)
                     return await update.then(ret => {
                         if(ret){
                             return res
