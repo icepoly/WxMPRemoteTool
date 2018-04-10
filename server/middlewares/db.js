@@ -24,7 +24,7 @@ async function checkUserInfo(open_id){
         })
 }
 
-async function updateTaskInfo(open_id){
+async function updateTaskInfo(open_id, data){
     return DB('cTaskInfo').where('open_id', '=', open_id).where('state', '=', 0).update({
         state: 1,
         type: data.type,
@@ -51,7 +51,7 @@ async function addTask(open_id, data){
         }})
     
     if(checkret === 0x00){
-        return await updateTaskInfo(open_id).then(res => {
+        return await updateTaskInfo(open_id, data).then(res => {
             return res
         })
     }
