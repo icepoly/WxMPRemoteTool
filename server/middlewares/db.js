@@ -29,24 +29,28 @@ async function updateTaskState(open_id, data, state){
     await check.then(res => {
             if (res <= 0) {
                 return 0x01
+            }
+            else
+            {
+                return DB('cTaskInfo')
+                .where('open_id', '=', open_id)
+                .where('state', '=', 0)
+                .update({
+                  state: state,
+                  type: data.type,
+                  optype: data.optype,
+                  opdata: data.opdata,
+                }).then(res =>{
+                    if(JSON.stringify(res) == "[]"){
+                        return 0x10
+                    }
+                    else {
+                        return 0
+                    }}, err => {
+                        return 0x11
+                    })
             }})
-    return DB('cTaskInfo')
-    .where('open_id', '=', open_id)
-    .where('state', '=', 0)
-    .update({
-      state: state,
-      type: data.type,
-      optype: data.optype,
-      opdata: data.opdata,
-    }).then(res =>{
-        if(JSON.stringify(res) == "[]"){
-            return 0x10
-        }
-        else {
-            return 0
-        }}, err => {
-            return 0x11
-        })
+
 }
 
 module.exports = { updateTaskState }
