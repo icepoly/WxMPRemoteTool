@@ -48,7 +48,8 @@ async function addTask(open_id, data){
                               return 0x11
                           })
                 }
-                return await updateTaskInfo(open_id).then(res => {
+                var update = updateTaskInfo(open_id)
+                return await update.then(res => {
                     return res
                 })
             }})
