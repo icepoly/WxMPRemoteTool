@@ -10,6 +10,7 @@ module.exports = async (ctx, next) => {
         await check.then(res => {
             if (res <= 0) {
                 ctx.state.code = -1
+                return
             }
         })
 
