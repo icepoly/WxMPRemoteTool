@@ -58,9 +58,9 @@ Page({
     {
       var that = this
       var jsondata = {}
-      jsondata.type = 2
+      jsondata.type = 1
       jsondata.optype = 1
-      jsondata.opdata = 1
+      jsondata.opdata = "checkin"
       this.setData({
         takedata: jsondata
       })

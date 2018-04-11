@@ -6,9 +6,9 @@ var md5crypto = (content) => {
     return hash.digest('hex')
 }
 
-var logout = (content) => {
+var log = (content) => {
     var date = new Date()
-    console.log("logoutput: ", date, content)
+    console.log("logtime: ", date.toLocaleString(), " log: ", content)
 }
 
 module.exports = { md5crypto, logout }
