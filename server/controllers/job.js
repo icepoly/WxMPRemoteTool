@@ -1,13 +1,13 @@
 const db= require('../middlewares/db')
 
-async function get (ctx, next) {
-    const { openid } = ctx.query
-    var get = db.acceptJob(openid)
+async function post (ctx, next) {
+    const body = ctx.request.body
+    var get = db.acceptJob(body.open_id)
     await get.then(res => {
         ctx.state.data = res
     })
 }
 
 module.exports = {
-    get
+    post
 }
