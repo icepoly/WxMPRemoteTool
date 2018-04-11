@@ -11,4 +11,4 @@ var log = (content) => {
     console.log("logtime: ", date.toLocaleString(), " log: ", content)
 }
 
-module.exports = { md5crypto, logout }
+module.exports = { md5crypto, log }
