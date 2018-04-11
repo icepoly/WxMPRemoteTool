@@ -1,6 +1,6 @@
 const db= require('../middlewares/db')
 const util= require('../middlewares/util')
-const config = require('./config')
+const config = require('../config')
 
 async function post (ctx, next) {
     const body = ctx.request.body
