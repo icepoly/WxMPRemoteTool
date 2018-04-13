@@ -3,3 +3,4 @@ config.xml
 __pycache__
 .vscode
 client/utils.pyc
+wxapp/project.config.json
