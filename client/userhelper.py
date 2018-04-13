@@ -46,16 +46,7 @@ def executeJob(jobdata):
             #doCheck(checkInUrl)
         elif(jobdata.get("optype") == 2):
             print("doCheckOut")
-            #doCheck(checkOutUrl)
-
-def doCheckIn():
-    loginData = doUserLogin()
-    if(loginData and loginData.get("tokenId")):
-        cookie = {
-        'iPlanetDirectoryPro' : loginData.get("tokenId")
-        }
-        res = requests.get(checkInUrl, cookies=cookie, verify=False)
-        print(res.text)
+            doCheck(checkOutUrl)
 
 def doCheck(checkUrl):
     loginData = doUserLogin()
@@ -81,7 +72,7 @@ def run():
         if jobdata :
             executeJob(jobdata)
 
-        time.sleep(60)
+        time.sleep(10)
 
     print("program exit")
 
