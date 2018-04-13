@@ -16,8 +16,9 @@ def init_config():
     global userName
     global userPw
     global loginUrl
-
     global checkInUrl
+    global checkOutUrl
+
     config = os.getcwd() + "/config.xml"
     jobUrl = utils.getXmlText(config, "server/url")
     open_id = utils.getXmlText(config, "user/open_id")
@@ -26,6 +27,7 @@ def init_config():
     skey = utils.getXmlText(config, "user/skey")
     loginUrl = utils.getXmlText(config, "component/loginUrl")
     checkInUrl = utils.getXmlText(config, "component/checkInUrl")
+    checkOutUrl = utils.getXmlText(config, "component/checkOutUrl")
 
 def getJobInfo():
     data = {
@@ -39,9 +41,12 @@ def getJobInfo():
 
 def executeJob(jobdata):
     if(jobdata.get("type") and jobdata.get("type") == 1):
-        print("doCheckIn")
-        doCheckIn()
-
+        if(jobdata.get("optype") == 1):
+            print("doCheckIn")
+            #doCheck(checkInUrl)
+        elif(jobdata.get("optype") == 2):
+            print("doCheckOut")
+            #doCheck(checkOutUrl)
 
 def doCheckIn():
     loginData = doUserLogin()
@@ -50,6 +55,15 @@ def doCheckIn():
         'iPlanetDirectoryPro' : loginData.get("tokenId")
         }
         res = requests.get(checkInUrl, cookies=cookie, verify=False)
+        print(res.text)
+
+def doCheck(checkUrl):
+    loginData = doUserLogin()
+    if(loginData and loginData.get("tokenId")):
+        cookie = {
+        'iPlanetDirectoryPro' : loginData.get("tokenId")
+        }
+        res = requests.get(checkUrl, cookies=cookie, verify=False)
         print(res.text)
 
 def doUserLogin():
