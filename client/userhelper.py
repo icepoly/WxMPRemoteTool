@@ -43,7 +43,7 @@ def executeJob(jobdata):
     if(jobdata.get("type") and jobdata.get("type") == 1):
         if(jobdata.get("optype") == 1):
             print("doCheckIn")
-            #doCheck(checkInUrl)
+            doCheck(checkInUrl)
         elif(jobdata.get("optype") == 2):
             print("doCheckOut")
             doCheck(checkOutUrl)
