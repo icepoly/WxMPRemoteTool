@@ -13,12 +13,9 @@
         </view>
     </view>
 
-    <view class="message">
-        <view class="message-text">
-            <text bindtap="doCheckIn">请求</text>
-        </view>
-        <view class="message-text" wx:if="{{requestResult}}">
-            <text class="request-text">{{'请求结果：' + requestResult}}</text>
-        </view>
-    </view>
+    <button class="weui-btn" type="default" plain="true" bindtap="getTaskInfo">任务状态</button>
+
+    <button class="weui-btn" type="default" plain="true" bindtap="doCheckIn">CheckIn</button>
+
+    <button class="weui-btn" type="default" plain="true" bindtap="doCheckOut">CheckOut</button>
 </view>

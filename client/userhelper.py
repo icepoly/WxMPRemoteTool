@@ -34,19 +34,30 @@ def getJobInfo():
     'open_id' : open_id,
     'skey' : skey
     }
-    res = requests.post(jobUrl, data)
+    res = requests.get(jobUrl, params=data)
     resData = json.loads(res.text)
-    if(resData.get("data") and resData["data"]):
+    if(resData and resData.get("data") and resData["data"]):
         return resData["data"]
+
+def updateJobInfo(msg):
+    data = {
+    'open_id' : open_id,
+    'skey' : skey,
+    'msg' : msg
+    }
+    res = requests.post(jobUrl, data)
+    print(msg)
 
 def executeJob(jobdata):
     if(jobdata.get("type") and jobdata.get("type") == 1):
         if(jobdata.get("optype") == 1):
             print("doCheckIn")
-            doCheck(checkInUrl)
+            #doCheck(checkInUrl)
+            updateJobInfo("doCheckIn Success")
         elif(jobdata.get("optype") == 2):
             print("doCheckOut")
-            doCheck(checkOutUrl)
+            #doCheck(checkOutUrl)
+            updateJobInfo("doCheckOut Success")
 
 def doCheck(checkUrl):
     loginData = doUserLogin()

@@ -8,7 +8,6 @@ Page({
         userInfo: {},
         logged: false,
         takeSession: false,
-        requestResult: ''
     },
 
     // 用户登录示例
@@ -67,6 +66,18 @@ Page({
       this.doRequestWithSession()
     },
 
+    doCheckOut: function () {
+      var that = this
+      var jsondata = {}
+      jsondata.type = 1
+      jsondata.optype = 2
+      jsondata.opdata = "checkout"
+      this.setData({
+        takedata: jsondata
+      })
+      this.doRequestWithSession()
+    },
+
     doRequestWithSession: function () {
         util.showBusy('请求中...')
         var that = this
@@ -79,11 +90,8 @@ Page({
             },
             method: "POST",
             success (result) {
-                util.showSuccess('请求成功完成')
                 console.log('request success', result)
-                that.setData({
-                    requestResult: JSON.stringify(result.data)
-                })
+                util.showModel('请求成功完成', JSON.stringify(result.data));
             },
             fail (error) {
                 util.showModel('请求失败', error);
@@ -91,5 +99,23 @@ Page({
             }
         }
         qcloud.request(options)
+    },
+
+    getTaskInfo: function () {
+      util.showBusy('请求中...')
+      var that = this
+
+      var options = {
+        url: config.service.taskUrl,
+        success(result) {
+          console.log('request success', result)
+          util.showModel('请求成功完成', JSON.stringify(result.data));
+        },
+        fail(error) {
+          util.showModel('请求失败', error);
+          console.log('request fail', error);
+        }
+      }
+      qcloud.request(options)
     }
 })
