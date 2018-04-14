@@ -31,6 +31,7 @@ async function queryTaskInfo(open_id){
             return data
         }
         else {
+            data.state = res[0].state
             data.type = res[0].type
             data.optype =res[0].optype
             data.opdata =res[0].opdata        
