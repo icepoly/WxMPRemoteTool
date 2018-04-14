@@ -6,7 +6,7 @@ async function get (ctx, next){
     // 具体查看：
     if (ctx.state.$wxInfo.loginState === 1) {
         // loginState 为 1，登录态校验成功
-        var query = db.queryJobInfo(ctx.state.$wxInfo.userinfo.openId)
+        var query = db.queryTaskInfo(ctx.state.$wxInfo.userinfo.openId)
         await query.then(res => {
             ctx.body = res
         })
