@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+    <button class="weui-btn" type="default" plain="true" bindtap="getTaskInfo">任务状态</button>
+</view>

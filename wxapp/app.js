@@ -11,5 +11,5 @@ App({
      */
     onLaunch() {
         qcloud.setLoginUrl(config.service.loginUrl);
-    }
+    },
 });

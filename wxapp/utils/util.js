@@ -14,7 +14,6 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-
 // 显示繁忙提示
 var showBusy = text => wx.showToast({
     title: text,
@@ -29,14 +28,47 @@ var showSuccess = text => wx.showToast({
 })
 
 // 显示失败提示
-var showModel = (title, content) => {
+var showError = (error) => {
     wx.hideToast();
-
+    wx.hideLoading();
     wx.showModal({
-        title,
-        content: JSON.stringify(content),
+        title : '错误',
+        content: error,
         showCancel: false
     })
 }
 
-module.exports = { formatTime, showBusy, showSuccess, showModel }
+var showState= (state) => {
+  wx.hideToast();
+  wx.hideLoading();
+  if (state == 1){
+    showSuccess('成功');
+  }
+  else
+  {
+    var error = 'error'
+    if (typeof(state) == 'number'){
+      var errorIdStr = state.toString(16);
+      errorIdStr = errorIdStr.substr(errorIdStr.length-2)
+      if (errorIdStr == 'ff') {
+        error = '数据库发生系统错误'
+      } else if(errorIdStr == 'f0'){
+        error = '数据库获取数据发生'
+      } else if(errorIdStr == 'e0'){
+        error = '数据库更新发生错误'
+      }
+    }
+    else
+    {
+      error = state
+    }
+    wx.showModal({
+      title: '错误',
+      content: error,
+      showCancel: false
+    })
+  }
+
+}
+
+module.exports = { formatTime, showBusy, showSuccess, showError, showState }

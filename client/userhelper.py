@@ -36,8 +36,14 @@ def getJobInfo():
     }
     res = requests.get(jobUrl, params=data)
     resData = json.loads(res.text)
-    if(resData and resData.get("data") and resData["data"]):
-        return resData["data"]
+    if(resData):
+        if(isinstance(resData,dict) and resData.get("code") and resData.get("code") == 0 or resData == int('-0x20f0',16)):
+            return {}
+        elif(isinstance(resData,dict)):
+            return resData
+        else:
+            print("getJobInfo error:", hex(resData))
+            return {}
 
 def updateJobInfo(msg):
     data = {
@@ -50,14 +56,16 @@ def updateJobInfo(msg):
 
 def executeJob(jobdata):
     if(jobdata.get("type") and jobdata.get("type") == 1):
+        ret = ""
         if(jobdata.get("optype") == 1):
             print("doCheckIn")
-            #doCheck(checkInUrl)
-            updateJobInfo("doCheckIn Success")
+            ret = doCheck(checkInUrl)
         elif(jobdata.get("optype") == 2):
             print("doCheckOut")
-            #doCheck(checkOutUrl)
-            updateJobInfo("doCheckOut Success")
+            #ret = doCheck(checkOutUrl)
+
+        if ret.strip() != "":  
+            updateJobInfo(ret)
 
 def doCheck(checkUrl):
     loginData = doUserLogin()
@@ -66,7 +74,7 @@ def doCheck(checkUrl):
         'iPlanetDirectoryPro' : loginData.get("tokenId")
         }
         res = requests.get(checkUrl, cookies=cookie, verify=False)
-        print(res.text)
+        return res.text
 
 def doUserLogin():
     data = {
