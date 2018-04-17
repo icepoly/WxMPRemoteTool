@@ -112,14 +112,15 @@ async function acceptJob(open_id){
         var data = await queryJobInfo(open_id).then(res => {
             return res
         })
-        var updateret = await updateJobInfo(open_id, 2, "accept job").then(ret => {
-            return ret
-        })
-        if(updateret > 0){
+
+        if(data && typeof(data) == 'object'){
+            await updateJobInfo(open_id, 2, "accept job").then(ret => {
+                return ret
+            })
             return data
         }
         else{
-            return updateret
+            return data
         }
     }
     else
