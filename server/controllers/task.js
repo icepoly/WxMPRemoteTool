@@ -24,12 +24,7 @@ async function post (ctx, next){
         // loginState 为 1，登录态校验成功
         var update = db.addTask(ctx.state.$wxInfo.userinfo.openId, ctx.request.body)
         await update.then(res => {
-            if (res === 0) {
-                ctx.body = 'success'
-            }
-            else{
-                ctx.body = res
-            }
+            ctx.body = res
         })
 
     } else {
