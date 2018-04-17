@@ -49,7 +49,7 @@ async function updateTaskInfo(open_id, data){
         opdata: data.opdata,
       }).then(res =>{
           if(res === 0){
-              return -0x11F0
+              return -0x11E0
           }
           else {
               return 1
@@ -95,7 +95,7 @@ async function updateJobInfo(open_id, state, data){
         opdata: data,
       }).then(res =>{
           if(res === 0){
-              return -0x21F0
+              return -0x21E0
           }
           else {
               return 1
