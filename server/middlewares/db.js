@@ -15,12 +15,12 @@ const DB = require('knex')({
 async function checkUserInfo(open_id){
     return DB('cUserInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return -0x10
+            return -0x01
         }
         else {
             return res[0].permission
         }}, err => {
-            return -0xFF
+            return -0x0F
         })
 }
 
@@ -28,7 +28,7 @@ async function queryTaskInfo(open_id){
     var data = {}
     return DB('cTaskInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return -0x10
+            return -0x01
         }
         else {
             data.state = res[0].state
@@ -37,7 +37,7 @@ async function queryTaskInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
-            return -0xFF
+            return -0x0F
         })    
 }
 
@@ -49,12 +49,12 @@ async function updateTaskInfo(open_id, data){
         opdata: data.opdata,
       }).then(res =>{
           if(res === 0){
-              return -0x10
+              return -0x01
           }
           else {
               return 1
           }}, err => {
-              return -0xFF
+              return -0x0F
           })
 }
 
@@ -77,7 +77,7 @@ async function queryJobInfo(open_id){
     var data = {}
     return DB('cTaskInfo').where('state', '=', 1).whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return -0x10
+            return -0x01
         }
         else {
             data.type = res[0].type
@@ -85,7 +85,7 @@ async function queryJobInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
-            return -0xFF
+            return -0x0F
         })    
 }
 
@@ -95,12 +95,12 @@ async function updateJobInfo(open_id, state, data){
         opdata: data,
       }).then(res =>{
           if(res === 0){
-              return -0x10
+              return -0x01
           }
           else {
               return 1
   }}, err => {
-      return -0xFF
+      return -0x0F
   })
 }
 
