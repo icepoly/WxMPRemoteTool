@@ -15,12 +15,20 @@ const DB = require('knex')({
 async function checkUserInfo(open_id){
     return DB('cUserInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
+<<<<<<< HEAD
             return -0x10
+=======
+            return 0
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         }
         else {
             return res[0].permission
         }}, err => {
+<<<<<<< HEAD
             return -0xFF
+=======
+            return -1
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         })
 }
 
@@ -28,7 +36,11 @@ async function queryTaskInfo(open_id){
     var data = {}
     return DB('cTaskInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
+<<<<<<< HEAD
             return -0x10
+=======
+            return 0
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         }
         else {
             data.state = res[0].state
@@ -37,7 +49,11 @@ async function queryTaskInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
+<<<<<<< HEAD
             return -0xFF
+=======
+            return -1
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         })    
 }
 
@@ -49,12 +65,20 @@ async function updateTaskInfo(open_id, data){
         opdata: data.opdata,
       }).then(res =>{
           if(res === 0){
+<<<<<<< HEAD
               return -0x10
+=======
+              return 0
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
           }
           else {
               return 1
           }}, err => {
+<<<<<<< HEAD
               return -0xFF
+=======
+              return -1
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
           })
 }
 
@@ -77,7 +101,11 @@ async function queryJobInfo(open_id){
     var data = {}
     return DB('cTaskInfo').where('state', '=', 1).whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
+<<<<<<< HEAD
             return -0x10
+=======
+            return 0
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         }
         else {
             data.type = res[0].type
@@ -85,7 +113,11 @@ async function queryJobInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
+<<<<<<< HEAD
             return -0xFF
+=======
+            return -1
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
         })    
 }
 
@@ -95,12 +127,20 @@ async function updateJobInfo(open_id, state, data){
         opdata: data,
       }).then(res =>{
           if(res === 0){
+<<<<<<< HEAD
               return -0x10
+=======
+              return 0
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
           }
           else {
               return 1
   }}, err => {
+<<<<<<< HEAD
       return -0xFF
+=======
+      return -1
+>>>>>>> 44e0bb377825f60175f1a7906afa2e1d259d123a
   })
 }
 
