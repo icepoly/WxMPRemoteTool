@@ -15,12 +15,12 @@ const DB = require('knex')({
 async function checkUserInfo(open_id){
     return DB('cUserInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return 0x10
+            return 0
         }
         else {
             return res[0].permission
         }}, err => {
-            return 0xFF
+            return -1
         })
 }
 
@@ -28,7 +28,7 @@ async function queryTaskInfo(open_id){
     var data = {}
     return DB('cTaskInfo').whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return 0x10
+            return 0
         }
         else {
             data.state = res[0].state
@@ -37,7 +37,7 @@ async function queryTaskInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
-            return 0xFF
+            return -1
         })    
 }
 
@@ -49,12 +49,12 @@ async function updateTaskInfo(open_id, data){
         opdata: data.opdata,
       }).then(res =>{
           if(res === 0){
-              return 0x10
+              return 0
           }
           else {
-              return 0x00
+              return 1
           }}, err => {
-              return 0xFF
+              return -1
           })
 }
 
@@ -62,7 +62,7 @@ async function addTask(open_id, data){
     var checkret = await checkUserInfo(open_id).then(res => {
         return res
     })
-    if(checkret === 0){
+    if(checkret > 0){
         return await updateTaskInfo(open_id, data).then(res => {
             return res
         })
@@ -77,7 +77,7 @@ async function queryJobInfo(open_id){
     var data = {}
     return DB('cTaskInfo').where('state', '=', 1).whereRaw('open_id = ?',open_id).then(res =>{
         if(JSON.stringify(res) == "[]"){
-            return 0x10
+            return 0
         }
         else {
             data.type = res[0].type
@@ -85,7 +85,7 @@ async function queryJobInfo(open_id){
             data.opdata =res[0].opdata        
             return data
         }}, err => {
-            return 0xFF
+            return -1
         })    
 }
 
@@ -95,12 +95,12 @@ async function updateJobInfo(open_id, state, data){
         opdata: data,
       }).then(res =>{
           if(res === 0){
-              return 0x10
+              return 0
           }
           else {
-              return 0x00
+              return 1
   }}, err => {
-      return 0xFF
+      return -1
   })
 }
 
@@ -108,14 +108,14 @@ async function acceptJob(open_id){
     var checkret = await checkUserInfo(open_id).then(res => {
         return res
     })
-    if(checkret === 0){
+    if(checkret > 0){
         var data = await queryJobInfo(open_id).then(res => {
             return res
         })
         var updateret = await updateJobInfo(open_id, 2, "accept job").then(ret => {
             return ret
         })
-        if(updateret === 0){
+        if(updateret > 0){
             return data
         }
         else{
