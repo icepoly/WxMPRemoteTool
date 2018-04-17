@@ -48,7 +48,7 @@ Page({
               util.showState(result.data)
             },
             fail (error) {
-              wx.showError(error)
+              util.showError(error)
             }
         }
         qcloud.request(options)

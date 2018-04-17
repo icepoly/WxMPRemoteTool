@@ -2,6 +2,7 @@
 //获取应用实例
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
+var util = require('../../utils/util.js')
 
 var app = getApp();
 Page({
@@ -71,14 +72,14 @@ Page({
             },
 
             fail(error) {
-              wx.showError(error)
+              util.showError(error)
             }
           })
         }
       },
 
       fail(error) {
-        wx.showError(error)
+        util.showError(error)
       }
     })
   }
