@@ -35,7 +35,9 @@ async function queryTaskInfo(open_id){
             data.type = res[0].type
             data.optype =res[0].optype
             data.opdata =res[0].opdata       
-            data.time =res[0].time       
+            var date = new Date()
+            date.setTime(res[0].time)
+            data.time =date.toLocaleString()       
             return data
         }}, err => {
             return -0x10FF
