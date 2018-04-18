@@ -60,7 +60,14 @@ var showState= (state) => {
     }
     else
     {
-      error = state
+      if (typeof(state) == 'object'){
+        if(JSON.stringify(state.data) != "{}"){
+          error = JSON.stringify(state.data)
+        }
+      }
+      else if (typeof(state) == 'string'){
+        error = state
+      }
     }
     wx.showModal({
       title: '错误',
@@ -68,7 +75,6 @@ var showState= (state) => {
       showCancel: false
     })
   }
-
 }
 
 module.exports = { formatTime, showBusy, showSuccess, showError, showState }

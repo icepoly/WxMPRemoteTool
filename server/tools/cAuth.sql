@@ -38,7 +38,7 @@ CREATE TABLE `cSessionInfo` (
 DROP TABLE IF EXISTS `cUserInfo`;
 CREATE TABLE `cUserInfo` (
   `open_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permission` tinyint unsigned NOT NULL DEFAULT 0,
+  `permission` tinyint unsigned NOT NULL DEFAULT -1,
   PRIMARY KEY (`open_id`),
   foreign key(open_id) references cSessionInfo(open_id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息';
