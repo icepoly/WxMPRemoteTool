@@ -51,7 +51,7 @@ CREATE TABLE `cTaskInfo` (
   `type` tinyint unsigned NOT NULL DEFAULT 0,
   `optype` tinyint unsigned NOT NULL DEFAULT 0,
   `opdata` varchar(256) NOT NULL DEFAULT '',
-  `time` datetime NOT NULL DEFAULT NOW(),
+  `time` bigint unsigned NOT NULL DEFAULT 0
   PRIMARY KEY (`open_id`),
   foreign key(open_id) references cSessionInfo(open_id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='任务信息';
