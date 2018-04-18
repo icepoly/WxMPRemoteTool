@@ -1,4 +1,5 @@
 const { mysql: config } = require('../config')
+const util= require('../middlewares/util')
 
 var arguments = process.argv.splice(2)
 
@@ -29,7 +30,9 @@ DB('cUserInfo').where('open_id', '=', arguments[0]).update({permission: argument
             process.exit(0)
     }
     else {
-            console.log('adduser成功！')
+            var open_id = new Buffer(arguments[0]).toString('base64');
+            var skey = new Buffer(util.md5crypto(open_id + config.tokenkey)).toString('base64');
+            console.log('adduser成功！open_id:%s skey:%s',open_id, skey)
             process.exit(0)
     }}, err => {
         throw new Error(err)
