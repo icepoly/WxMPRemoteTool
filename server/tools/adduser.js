@@ -31,7 +31,7 @@ DB('cUserInfo').where('open_id', '=', arguments[0]).update({permission: argument
     }
     else {
             var open_id = new Buffer(arguments[0]).toString('base64');
-            var skey = new Buffer(util.md5crypto(open_id + config.tokenkey)).toString('base64');
+            var skey = new Buffer(util.md5crypto(arguments[0] + config.tokenkey)).toString('base64');
             console.log('adduser成功！open_id:%s skey:%s',open_id, skey)
             process.exit(0)
     }}, err => {
