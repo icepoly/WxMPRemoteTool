@@ -7,6 +7,7 @@ import utils
 import requests
 import json
 import time
+import base64
 from urllib import parse
 
 def init_config():
@@ -21,10 +22,10 @@ def init_config():
 
     config = os.getcwd() + "/config.xml"
     jobUrl = utils.getXmlText(config, "server/url")
-    open_id = utils.getXmlText(config, "user/open_id")
-    userName = utils.getXmlText(config, "user/userName")
-    userPw = utils.getXmlText(config, "user/passwd")
-    skey = utils.getXmlText(config, "user/skey")
+    open_id = base64.b64decode(utils.getXmlText(config, "user/open_id"))
+    userName = base64.b64decode(utils.getXmlText(config, "user/userName"))
+    userPw = base64.b64decode(utils.getXmlText(config, "user/passwd"))
+    skey = base64.b64decode(utils.getXmlText(config, "user/skey"))
     loginUrl = utils.getXmlText(config, "component/loginUrl")
     checkInUrl = utils.getXmlText(config, "component/checkInUrl")
     checkOutUrl = utils.getXmlText(config, "component/checkOutUrl")

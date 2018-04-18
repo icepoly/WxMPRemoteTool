@@ -34,7 +34,8 @@ async function queryTaskInfo(open_id){
             data.state = res[0].state
             data.type = res[0].type
             data.optype =res[0].optype
-            data.opdata =res[0].opdata        
+            data.opdata =res[0].opdata       
+            data.time =res[0].time       
             return data
         }}, err => {
             return -0x10FF
@@ -47,6 +48,7 @@ async function updateTaskInfo(open_id, data){
         type: data.type,
         optype: data.optype,
         opdata: data.opdata,
+        time: Date.now(),
       }).then(res =>{
           if(res === 0){
               return -0x11E0
@@ -93,6 +95,7 @@ async function updateJobInfo(open_id, state, data){
     return DB('cTaskInfo').where('open_id', '=', open_id).where('state', '!=', 0).update({
         state: state,
         opdata: data,
+        time: Date.now(),
       }).then(res =>{
           if(res === 0){
               return -0x21E0
