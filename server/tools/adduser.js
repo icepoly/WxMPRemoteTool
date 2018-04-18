@@ -1,4 +1,5 @@
 const { mysql: config } = require('../config')
+const { tokenkey: tokenkey } = require('../config')
 const util= require('../middlewares/util')
 
 var arguments = process.argv.splice(2)
