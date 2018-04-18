@@ -64,6 +64,7 @@ Page({
           info.name = that.getFuncName(result.data.type, result.data.optype)
           info.state = that.getState(result.data.state)
           info.msg = that.getMsg(result.data.opdata)
+          info.time = result.data.time
           that.setData({
             taskInfo: info,
           })

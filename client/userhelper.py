@@ -92,7 +92,7 @@ def run():
         if jobdata :
             executeJob(jobdata)
 
-        time.sleep(10)
+        time.sleep(60)
 
     print("program exit")
 

@@ -12,5 +12,9 @@
             <view class="label">消息</view>
             <view class="label-right">{{taskInfo.msg}}</view>
         </view>
+        <view class="row-wrap">
+            <view class="label">时间</view>
+            <view class="label-right">{{taskInfo.time}}</view>
+        </view>
     </view>
 </view>
