@@ -19,6 +19,8 @@ def init_config():
     global loginUrl
     global checkInUrl
     global checkOutUrl
+    global jobFilePath 
+    global jobStoreMaxTime
 
     config = os.getcwd() + "/config.xml"
     jobUrl = utils.getXmlText(config, "server/url")
@@ -26,9 +28,11 @@ def init_config():
     userName = base64.b64decode(utils.getXmlText(config, "user/userName"))
     userPw = base64.b64decode(utils.getXmlText(config, "user/passwd"))
     skey = base64.b64decode(utils.getXmlText(config, "user/skey"))
-    loginUrl = utils.getXmlText(config, "component/loginUrl")
-    checkInUrl = utils.getXmlText(config, "component/checkInUrl")
-    checkOutUrl = utils.getXmlText(config, "component/checkOutUrl")
+    loginUrl = utils.getXmlText(config, "component/check/loginurl")
+    checkInUrl = utils.getXmlText(config, "component/check/checkiInurl")
+    checkOutUrl = utils.getXmlText(config, "component/check/checkouturl")
+    jobFilePath = utils.getXmlText(config, "component/buildserver/jobfilepath")
+    jobStoreMaxTime= int(utils.getXmlText(config, "component/buildserver/jobStoremaxtime"))
 
 def getJobInfo():
     data = {
@@ -86,6 +90,21 @@ def doUserLogin():
     resData = json.loads(res.text)
     return resData
 
+def doCleanServerJob():
+    jobDir =  os.listdir(jobFilePath)
+    for fileName in jobDir:
+        file = os.path.join(jobFilePath, fileName)
+        if os.path.isfile(file):
+            diff = int(time.time()) - int(fileName)
+            if(diff > jobStoreMaxTime):
+                os.remove(file)
+
+def doBuildServer(args):
+    doCleanServerJob()
+    jobFile = jobFilePath + str(int(time.time()))
+    with open(jobFile, 'w') as f:
+        f.write(args)
+
 def run():
     while True:
         jobdata = getJobInfo()
@@ -98,7 +117,8 @@ def run():
 
 def main():
     init_config()
-    run()
+    #run()
+    doBuildServer('VN_6')
 
 if __name__ == "__main__":
     main()
