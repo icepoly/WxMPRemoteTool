@@ -31,9 +31,17 @@ var showSuccess = text => wx.showToast({
 var showError = (error) => {
     wx.hideToast();
     wx.hideLoading();
+    var content = 'error'
+    if (typeof (error) == 'object') {
+      if (error.errMsg !== undefined)
+        content = error.errMsg
+    }
+    else if (typeof (error) == 'string') {
+      content = error
+    }
     wx.showModal({
         title : '错误',
-        content: error,
+        content: content,
         showCancel: false
     })
 }
