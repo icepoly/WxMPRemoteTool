@@ -2,4 +2,83 @@
   min-height: 100%;
   overflow: hidden;
   overflow-y: hidden;
+  background-color: #f5f5f9;
+  justify-content: initial;
+}
+.check-box{
+    background:none;
+    display:flex;
+    flex-direction:column;
+    height:100rpx;
+}
+.check-box-display{
+    display:flex;
+    padding-bottom:20rpx
+}
+.check-btn{
+    width:100%;
+    height: 100rpx;
+    margin:10rpx;
+}
+.task-box{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100rpx;
+    position: fixed;
+    left: 0;
+    border-bottom:1px solid #eee; 
+    border-top:1px solid #eee; 
+    background-color: #f5f5f9;
+}
+.task-box .exec-btn{
+    width:120rpx;
+    text-align: center;
+    line-height: 100rpx;
+    background-color: #e64340;
+    font-size:32rpx;
+    color:#ffffff;
+}
+.task-box .exec-btn.disable{
+    background-color: #ccc;
+}
+.task-box .select-job{
+    position: relative;
+    padding-left: 15px;
+    padding-right: 30px;
+    height: 2.58823529em;
+    min-height: 2.58823529em;
+    line-height: 2.58823529em;
+    border-right: 1rpx solid #D9D9D9;
+}
+.select-job:before {
+  content: " ";
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border-width: 2px 2px 0 0;
+  border-color: #C8C8CD;
+  border-style: solid;
+  -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+          transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  position: relative;
+  top: -2px;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -4px;
+}
+.task-box .middle-job{
+    text-align: center;
+    height: 2.58823529em;
+    min-height: 2.58823529em;
+    line-height: 2.58823529em;
+}
+.hui{
+    color: #777;
+}
+.border-bottom{
+    height:20rpx;
+    background: #eee;
+    width:100%;
 }

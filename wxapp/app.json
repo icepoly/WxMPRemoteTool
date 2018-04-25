@@ -5,10 +5,11 @@
         "pages/task/task"
     ],
     "window": {
-        "backgroundTextStyle": "light",
+        "backgroundTextStyle": "dark",
         "navigationBarBackgroundColor": "#333",
         "navigationBarTitleText": "Remote Tool",
-        "navigationBarTextStyle": "white"
+        "navigationBarTextStyle": "white",
+        "enablePullDownRefresh": true
     },
     "tabBar": {
       "color": "#6e6d6b",

@@ -9,6 +9,7 @@ import json
 import time
 import base64
 from urllib import parse
+import re
 
 def init_config():
     global jobUrl
@@ -29,7 +30,7 @@ def init_config():
     userPw = base64.b64decode(utils.getXmlText(config, "user/passwd"))
     skey = base64.b64decode(utils.getXmlText(config, "user/skey"))
     loginUrl = utils.getXmlText(config, "component/check/loginurl")
-    checkInUrl = utils.getXmlText(config, "component/check/checkiInurl")
+    checkInUrl = utils.getXmlText(config, "component/check/checkinurl")
     checkOutUrl = utils.getXmlText(config, "component/check/checkouturl")
     jobFilePath = utils.getXmlText(config, "component/buildserver/jobfilepath")
     jobStoreMaxTime= int(utils.getXmlText(config, "component/buildserver/jobStoremaxtime"))
@@ -42,7 +43,7 @@ def getJobInfo():
     res = requests.get(jobUrl, params=data)
     resData = json.loads(res.text)
     if(resData):
-        if(isinstance(resData,dict) and resData.get("code") and resData.get("code") == 0 or resData == int('-0x20f0',16)):
+        if isinstance(resData,dict) and resData.get("code") and resData.get("code") == 0 or resData == int('-0x20f0',16) :
             return {}
         elif(isinstance(resData,dict)):
             return resData
@@ -60,26 +61,32 @@ def updateJobInfo(msg):
     print(msg)
 
 def executeJob(jobdata):
-    if(jobdata.get("type") and jobdata.get("type") == 1):
-        ret = ""
-        if(jobdata.get("optype") == 1):
-            print("doCheckIn")
-            ret = doCheck(checkInUrl)
-        elif(jobdata.get("optype") == 2):
-            print("doCheckOut")
-            #ret = doCheck(checkOutUrl)
-
-        if ret.strip() != "":  
-            updateJobInfo(ret)
+    if jobdata.get("type"):
+        ret = "No Function"
+        if jobdata.get("type") == 0 :
+            if jobdata.get("optype") == 0:
+                print("doCheckIn")
+                ret = doCheck(checkInUrl)
+            elif jobdata.get("optype") == 1:
+                print("doCheckOut")
+                ret = doCheck(checkOutUrl)
+        elif jobdata.get("type") == 1 :
+            if jobdata.get("optype") == 0:
+                print("doBuildServer")
+                ret = doBuildServer(jobdata.get("opdata"))
+            elif jobdata.get("optype") == 1:
+                print("doBuildClient")
+ 
+        updateJobInfo(ret)
 
 def doCheck(checkUrl):
     loginData = doUserLogin()
-    if(loginData and loginData.get("tokenId")):
+    if loginData and loginData.get("tokenId") :
         cookie = {
         'iPlanetDirectoryPro' : loginData.get("tokenId")
         }
         res = requests.get(checkUrl, cookies=cookie, verify=False)
-        return res.text
+        return parseCheckResult(res.text)
 
 def doUserLogin():
     data = {
@@ -90,13 +97,28 @@ def doUserLogin():
     resData = json.loads(res.text)
     return resData
 
+def parseCheckResult(res):
+    msg = res
+    temp = re.sub('[{}\']', '', res)
+    temp = temp.split(',')
+    if len(temp) >= 2:
+        ret = temp[0].replace('result:', '')
+        if ret == 'true':
+            msg = temp[1].replace('actionType:', '')
+            if len(temp) > 2:
+                for index in range(2,len(msg)-1):
+                    msg = msg + ' ' + temp[index]
+
+    return msg
+
+
 def doCleanServerJob():
     jobDir =  os.listdir(jobFilePath)
     for fileName in jobDir:
         file = os.path.join(jobFilePath, fileName)
         if os.path.isfile(file):
             diff = int(time.time()) - int(fileName)
-            if(diff > jobStoreMaxTime):
+            if diff > jobStoreMaxTime :
                 os.remove(file)
 
 def doBuildServer(args):
@@ -104,6 +126,8 @@ def doBuildServer(args):
     jobFile = jobFilePath + str(int(time.time()))
     with open(jobFile, 'w') as f:
         f.write(args)
+    
+    return 'Begin Build Server ' + args
 
 def run():
     while True:
@@ -111,14 +135,13 @@ def run():
         if jobdata :
             executeJob(jobdata)
 
-        time.sleep(60)
+        time.sleep(10)
 
     print("program exit")
 
 def main():
     init_config()
-    #run()
-    doBuildServer('VN_6')
+    run()
 
 if __name__ == "__main__":
     main()

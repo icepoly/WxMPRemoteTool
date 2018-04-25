@@ -1,10 +1,20 @@
 <view class="container">
-  <view style="height:20rpx;background: #eee;width:100%;"></view>
-  <view class="function" style='background:none;display:flex;flex-direction:column;height:auto;'>
-    <view style='display:flex;padding-bottom:20rpx;'>
-      <button type='primary' style='width:100%;margin:20rpx;' bindtap="doCheckIn">签到</button>
-      <button type='warn' style='width:100%;margin:20rpx;' bindtap="doCheckOut">签退</button>
+  <view class="border-bottom"></view>
+  <view class="check-box">
+    <view class= "check-box-display">
+      <button type='primary' class="check-btn" bindtap="doCheckIn">签到</button>
+      <button type='warn' class="check-btn" bindtap="doCheckOut">签退</button>
     </view>
   </view>
-  <view style="height:20rpx;background: #eee;width:100%;"></view>
+  <view class="border-bottom"></view>
+  <view class="task-box">
+      <picker bindchange="bindPickerBuildGourpChange" range="{{buildGroup}}">
+        <view class="select-job {{buildType == '请选择'?'hui':''}}">
+          {{buildType}}
+        </view>
+      </picker>
+      <input name="buildName" class="middle-job" type="text" placeholder="任务" value="{{buildName}}" bindinput="bindNameInput"/>
+      <view class="{{showExecBtn?'exec-btn':'exec-btn.disable'}}" bindtap="doBuild">执行</view>
+  </view>
+  <view class="border-bottom"></view>
 </view>

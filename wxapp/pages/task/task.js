@@ -11,17 +11,31 @@ Page({
       this.getTaskInfo()
     },
     
+    onShow: function () {
+      var that = this
+      this.getTaskInfo()
+    },
+
     onPullDownRefresh:function(){
+      wx.showNavigationBarLoading()
       this.getTaskInfo()
     },
 
     getFuncName: function(type, optype){
-      if(type === 1){
-        if(optype == 1){
+      if(type === 0){
+        if(optype == 0){
           return '签到'
         }
-        else if(optype == 2){
+        else if(optype == 1){
           return '签退'
+        }
+      }
+      else if(type === 1){
+        if (optype == 0) {
+          return '服务器打包'
+        }
+        else if (optype == 1) {
+          return '客户端打包'
         }
       }
     },
@@ -38,20 +52,6 @@ Page({
       }
     },
 
-    getMsg: function(opdata){
-      var tempdata = opdata.replace(new RegExp(/\'/g),"\"")
-      tempdata = tempdata.replace(new RegExp(/{/g),"{\"")
-      tempdata = tempdata.replace(new RegExp(/,/g),",\"")
-      tempdata = tempdata.replace(new RegExp(/:/g),"\":")
-      try{
-        var data = JSON.parse(tempdata)
-        return data.actionType
-      }
-      catch(err){
-        return opdata
-      }
-    },
-
     getTaskInfo: function () {
       util.showBusy('请求中...')
       var that = this
@@ -59,16 +59,19 @@ Page({
       var options = {
         url: config.service.taskUrl,
         success(result) {
-          wx.stopPullDownRefresh()
           var info = {}
           info.name = that.getFuncName(result.data.type, result.data.optype)
           info.state = that.getState(result.data.state)
-          info.msg = that.getMsg(result.data.opdata)
+          info.msg = result.data.opdata
           info.time = result.data.time
           that.setData({
             taskInfo: info,
           })
           wx.hideToast();
+          setTimeout(function () {
+            wx.hideNavigationBarLoading()
+            wx.stopPullDownRefresh()
+          }, 1500);
         },
         fail(error) {
           util.showError(error);
