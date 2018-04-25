@@ -1,5 +1,4 @@
 {
   "navigationBarTitleText": "任务",
-  "enablePullDownRefresh": true,
-  "disableScroll": true
+  "enablePullDownRefresh": true
 }
