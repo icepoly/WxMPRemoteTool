@@ -61,16 +61,16 @@ def updateJobInfo(msg):
     print(msg)
 
 def executeJob(jobdata):
-    if jobdata.get("type"):
+    if jobdata.get("type") != None:
         ret = "No Function"
-        if jobdata.get("type") == 0 :
+        if jobdata.get("type") == 0:
             if jobdata.get("optype") == 0:
                 print("doCheckIn")
                 ret = doCheck(checkInUrl)
             elif jobdata.get("optype") == 1:
                 print("doCheckOut")
                 ret = doCheck(checkOutUrl)
-        elif jobdata.get("type") == 1 :
+        elif jobdata.get("type") == 1:
             if jobdata.get("optype") == 0:
                 print("doBuildServer")
                 ret = doBuildServer(jobdata.get("opdata"))
@@ -106,7 +106,7 @@ def parseCheckResult(res):
         if ret == 'true':
             msg = temp[1].replace('actionType:', '')
             if len(temp) > 2:
-                for index in range(2,len(msg)-1):
+                for index in range(2,len(temp)):
                     msg = msg + ' ' + temp[index]
 
     return msg
@@ -118,7 +118,7 @@ def doCleanServerJob():
         file = os.path.join(jobFilePath, fileName)
         if os.path.isfile(file):
             diff = int(time.time()) - int(fileName)
-            if diff > jobStoreMaxTime :
+            if diff > jobStoreMaxTime:
                 os.remove(file)
 
 def doBuildServer(args):
@@ -132,10 +132,10 @@ def doBuildServer(args):
 def run():
     while True:
         jobdata = getJobInfo()
-        if jobdata :
+        if jobdata:
             executeJob(jobdata)
 
-        time.sleep(60)
+        time.sleep(10)
 
     print("program exit")
 
