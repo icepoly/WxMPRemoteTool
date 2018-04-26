@@ -62,11 +62,24 @@ async function updateTaskInfo(open_id, data){
           })
 }
 
+function checkFunctionUse(permission, data){
+    if(permission > 0){
+        if(data.type == 1 && data.optype == 0 && permission < 100)
+            return false
+        else
+            return true
+    }
+    else
+    {
+        return false
+    }
+}
+
 async function addTask(open_id, data){
     var checkret = await checkUserInfo(open_id).then(res => {
         return res
     })
-    if(checkret > 0){
+    if(checkFunctionUse(checkret, data)){
         return await updateTaskInfo(open_id, data).then(res => {
             return res
         })
