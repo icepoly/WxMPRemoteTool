@@ -35,6 +35,9 @@ def init_config():
     jobFilePath = utils.getXmlText(config, "component/buildserver/jobfilepath")
     jobStoreMaxTime= int(utils.getXmlText(config, "component/buildserver/jobStoremaxtime"))
 
+    s = requests.session()
+    s.keep_alive = False
+
 def getJobInfo():
     data = {
     'open_id' : open_id,
