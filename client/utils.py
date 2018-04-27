@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding: utf-8 -*-
 import os
 import zipfile
 import subprocess
@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 
 __author__ = 'WD'
 
+
 def GetFiles(folderPath, fileEnd):
     retList = []
     for f in os.listdir(folderPath):
@@ -16,14 +17,15 @@ def GetFiles(folderPath, fileEnd):
             retList.append(f)
     return retList
 
-#覆盖拷贝文件夹
+
+# 覆盖拷贝文件夹
 def CopyFolder(source_dir, target_dir):
     for f in os.listdir(source_dir):
         source_file = os.path.join(source_dir, f)
         target_file = os.path.join(target_dir, f)
 
         if os.path.isfile(source_file):
-            #创建目录
+            # 创建目录
             if not os.path.exists(target_dir):
                 os.makedirs(target_dir)
             open(target_file, "wb").write(open(source_file, "rb").read())
@@ -32,7 +34,8 @@ def CopyFolder(source_dir, target_dir):
             CopyFolder(source_file, target_file)
     return
 
-#覆盖拷贝文件
+
+# 覆盖拷贝文件
 def CopyFile(source_file, target_file):
     if os.path.isfile(source_file):
         # 创建目录
@@ -42,13 +45,14 @@ def CopyFile(source_file, target_file):
         open(target_file, "wb").write(open(source_file, "rb").read())
     return
 
-#为目标文件创造所需路径
+
+# 为目标文件创造所需路径
 def MakePath(targetPath):
     curFindPos = 1
-    targetFullPath = targetPath.replace('\\','/')
+    targetFullPath = targetPath.replace('\\', '/')
 
     while curFindPos >= 0:
-        curFindPos = targetFullPath.find('/', curFindPos+1)
+        curFindPos = targetFullPath.find('/', curFindPos + 1)
         if curFindPos >= 0:
             curSubPath = targetFullPath[0:curFindPos]
             if not os.path.exists(curSubPath):
@@ -70,10 +74,12 @@ def DeleteFolder(path):
     os.rmdir(path)
     return
 
+
 def DeleteFile(filePath):
     if os.path.isfile(filePath):
         os.remove(filePath)
     return
+
 
 # 删除文件夹里的所有文件
 def CleanFolder(path):
@@ -95,7 +101,7 @@ def ZipFolder(folderPath, zipFilePath):
 
     if os.path.isfile(folderPath):
         filelist.append(folderPath)
-    else :
+    else:
         for root, _, files in os.walk(folderPath):
             for name in files:
                 filelist.append(os.path.join(root, name))
@@ -105,8 +111,7 @@ def ZipFolder(folderPath, zipFilePath):
 
     for tar in filelist:
         arcname = tar[len(folderPath):]
-        #print arcname
-        zf.write(tar,arcname)
+        zf.write(tar, arcname)
 
     zf.close()
 
@@ -116,15 +121,16 @@ def ZipFolder(folderPath, zipFilePath):
 # 解压文件夹
 def UnzipFile(zipFilePath, exportPath):
 
-    unziptodir = exportPath.replace('\\','/')
+    unziptodir = exportPath.replace('\\', '/')
 
     zfobjs = zipfile.ZipFile(zipFilePath)
 
     for curFilePath in zfobjs.namelist():
-        curFilePath = curFilePath.replace('\\','/')
+        curFilePath = curFilePath.replace('\\', '/')
         targetFilePath = unziptodir + '/' + curFilePath
         MakePath(targetFilePath)
-        open(unziptodir + '/' + curFilePath, "wb").write(zfobjs.read(curFilePath))
+        open(unziptodir + '/' + curFilePath, "wb").write(
+            zfobjs.read(curFilePath))
 
     return
 
@@ -137,9 +143,12 @@ def GetMD5(file_path):
     a_file.close()
     return m.hexdigest()
 
-#执行命令，如果错误，打印错误代码
+
+# 执行命令，如果错误，打印错误代码
 _isWinPlatform = ("Windows" in platform.system())
-def DoCmd(cmd, bPrintError = True):
+
+
+def DoCmd(cmd, bPrintError=True):
     if _isWinPlatform:
         status = os.system(cmd)
         print(cmd)
@@ -151,6 +160,7 @@ def DoCmd(cmd, bPrintError = True):
             print("\ncmd fail[" + cmd + "]: " + output)
         return status == 0
 
+
 def DoCmdWithOutput(cmd):
     if _isWinPlatform:
         return os.system(cmd)
@@ -158,44 +168,77 @@ def DoCmdWithOutput(cmd):
         (_, output) = subprocess.getstatusoutput(cmd)
         return output
 
+
 # 编译
 def CmdXcodeListProj(projPath):
     return DoCmd("xcodebuild -list -project '" + projPath + "'")
 
+
 # 打包
 def CmdXcodeArchive(projPath, scheme, archivePath):
-    return DoCmd("xcodebuild -project '" + projPath + '''' -scheme "''' + scheme + '''" archive -archivePath ''' + archivePath)
+    return DoCmd("xcodebuild -project '" + projPath + '''' -scheme "''' +
+                 scheme + '''" archive -archivePath ''' + archivePath)
+
 
 # 生成IPA
 def CmdXcodeExportArchiveWithCodeSign(archivePath, exportPath, codesign):
-    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " + archivePath + " -exportPath " + exportPath + ''' -exportSigningIdentity "''' + codesign+ '''"''')
+    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " +
+                 archivePath + " -exportPath " + exportPath +
+                 ''' -exportSigningIdentity "''' + codesign + '''"''')
+
 
 # 生成IPA
 def CmdXcodeExportArchive(archivePath, exportPath):
-    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " + archivePath + " -exportPath " + exportPath + ''' -exportWithOriginalSigningIdentity''')
+    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " +
+                 archivePath + " -exportPath " + exportPath +
+                 ''' -exportWithOriginalSigningIdentity''')
+
 
 # 生成IPA
-def CmdXcodeExportArchiveWithProv(archivePath, exportPath, provisioningProfile):
-    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " + archivePath + " -exportPath " + exportPath + ''' -exportProvisioningProfile "''' + provisioningProfile+ '''"''')
+def CmdXcodeExportArchiveWithProv(archivePath, exportPath,
+                                  provisioningProfile):
+    return DoCmd(
+        "xcodebuild -exportArchive -exportFormat ipa -archivePath " +
+        archivePath + " -exportPath " + exportPath +
+        ''' -exportProvisioningProfile "''' + provisioningProfile + '''"''')
+
 
 def CmdXcodeExportArchiveWithPlist(archivePath, exportPath, plistFile):
-    return DoCmd("xcodebuild -exportArchive -archivePath " + archivePath + " -exportOptionsPlist " + plistFile + " -exportPath " + exportPath)
+    return DoCmd(
+        "xcodebuild -exportArchive -archivePath " + archivePath +
+        " -exportOptionsPlist " + plistFile + " -exportPath " + exportPath)
 
-def CmdXcodeExportArchiveWithProvAndSign(archivePath, exportPath, provisioningProfile, codesign):
-    return DoCmd("xcodebuild -exportArchive -exportFormat ipa -archivePath " + archivePath + " -exportPath " + exportPath + ''' -exportProvisioningProfile "''' + provisioningProfile+ '''"'''+ ''' -exportSigningIdentity "''' + codesign+ '''"''')
+
+def CmdXcodeExportArchiveWithProvAndSign(archivePath, exportPath,
+                                         provisioningProfile, codesign):
+    return DoCmd(
+        "xcodebuild -exportArchive -exportFormat ipa -archivePath " +
+        archivePath + " -exportPath " + exportPath +
+        ''' -exportProvisioningProfile "''' + provisioningProfile + '''"''' +
+        ''' -exportSigningIdentity "''' + codesign + '''"''')
+
 
 def CmdXcodeBuild(projPath):
-    return DoCmd("xcodebuild -project '" + projPath + "/Unity-iPhone.xcodeproj'  -configuration 'Release' -target 'Unity-iPhone'")
+    return DoCmd(
+        "xcodebuild -project '" + projPath +
+        "/Unity-iPhone.xcodeproj'  -configuration 'Release' -target 'Unity-iPhone'"
+    )
 
 
 def CmdXcodeGenIpa(projPath, appName, exportPath, codeSign):
-    return DoCmd("/usr/bin/xcrun -sdk iphoneos PackageApplication -v '" + projPath+ "/build/" + appName + "' -o '" + exportPath  + "'" + ''' －－sign "''' + codeSign + '''"''')
+    return DoCmd("/usr/bin/xcrun -sdk iphoneos PackageApplication -v '" +
+                 projPath + "/build/" + appName + "' -o '" + exportPath + "'" +
+                 ''' －－sign "''' + codeSign + '''"''')
+
 
 def CmdUnityScript(unityPath, projPath, method):
-    return DoCmd(unityPath + " -batchmode -quit  -projectPath " + projPath + " -executeMethod " + method)
+    return DoCmd(unityPath + " -batchmode -quit  -projectPath " + projPath +
+                 " -executeMethod " + method)
+
 
 def GetTimestamp():
-     return time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+    return time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+
 
 def SVNUpdate(projPath, fromReversion, toReversion, logFilePath):
     if not os.path.exists(projPath):
@@ -204,20 +247,23 @@ def SVNUpdate(projPath, fromReversion, toReversion, logFilePath):
 
     print("svn updating to " + projPath)
 
-    success = DoCmd ("svn update -r " + fromReversion + " " + projPath)
+    success = DoCmd("svn update -r " + fromReversion + " " + projPath)
     if not success:
         print("svn update fail")
         return False
     if toReversion < 0 or toReversion <= fromReversion:
-        success = DoCmd ("svn update " + projPath + " > " + logFilePath)
+        success = DoCmd("svn update " + projPath + " > " + logFilePath)
     else:
-        success = DoCmd ("svn update -r" + toReversion + " " + projPath + " > " + logFilePath)
+        success = DoCmd("svn update -r" + toReversion + " " + projPath +
+                        " > " + logFilePath)
 
     return success
+
 
 def SVNUpdateToTop(projPath):
     DoCmd("svn cleanup " + projPath)
     return DoCmd("svn update --accept theirs-full " + projPath)
+
 
 def getXmlText(in_path, element):
     tree = ET.parse(in_path)
