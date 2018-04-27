@@ -1,2 +1,2 @@
 # WxMPRemoteTools
-Edit by Lishenghua
+Edit by LiShenghua
